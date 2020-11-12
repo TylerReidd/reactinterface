@@ -1,9 +1,19 @@
-
 import '../css/App.css';
 import React, { Component } from 'react';
+import AddAppointments from './AddAppointments'
+import ListAppointments from './ListAppointments';
+import SearchAppointments from './SearchAppointments'
 
 
 class App extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      myName: 'Tyler'
+    }
+  }
+
   render() {
   return (
     <main className="page bg-white" id="petratings">
@@ -11,9 +21,10 @@ class App extends Component {
       <div className="row">
         <div className="col-md-12 bg-white">
           <div className="container">
-            <div>Add Appointments</div>
-            <div>Search Appointments</div>
-            <div>List Appointments</div>
+            {this.state.myName}
+            <AddAppointments />
+            <SearchAppointments />
+            <ListAppointments />
           </div>
         </div>
       </div>
