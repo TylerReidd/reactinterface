@@ -1,63 +1,68 @@
-import React, {Component} from 'react';
-import {FaPlus} from 'react-icons/fa';
+import React, { Component } from 'react';
+import { FaPlus } from 'react-icons/fa';
 
 class AddAppointments extends Component {
-    constructor() {
-        super();
-        this.state = {
-            petName: '',
-            ownerName: '',
-            aptDate: '',
-            aptTime: '',
-            aptNotes: ''
+  constructor() {
+    super();
+    this.state = {
+      petName: '',
+      ownerName: '',
+      aptDate: '',
+      aptTime: '',
+      aptNotes: ''
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
+  }
+
+  handleAdd(e) {
+    e.preventDefault();
+    let tempApt = {
+      petName: this.state.petName,
+      ownerName: this.state.ownerName,
+      aptDate: this.state.aptDate + ' ' + this.state.aptTime,
+      aptNotes: this.state.aptNotes
+    };
+
+    this.props.addAppointment(tempApt);
+
+    this.setState({
+      petName: '',
+      ownerName: '',
+      aptDate: '',
+      aptTime: '',
+      aptNotes: ''
+    });
+    this.props.toggleForm();
+  }
+
+  handleChange(e) {
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  render() {
+    return (
+      <div
+        className={
+          'card textcenter mt-3 ' +
+          (this.props.formDisplay ? '' : 'add-appointment')
         }
-        this.handleChange = this.handleChange.bind(this);
-        this.handleAdd = this.handleAdd.bind(this);
-    }
-        handleAdd(e) {
-            e.preventDefault();
-            let tempApt = {
-                petName: this.state.petName,
-                ownerName: this.state.ownerName,
-                aptDate: this.state.aptDate + ' ' + this.state.aptTime,
-                aptNotes: this.state.aptNotes
-            }
-            this.props.addAppointment(tempApt);
-
-            this.setState({
-                petName: '',
-                ownerName: '',
-                aptDate: '',
-                aptTime: '',
-                aptNotes: ''
-            })
-            this.props.toggleForm();
-        }
-
-        handleChange(e) {
-            const target = e.target;
-            const value = target.value;
-            const name = target.name
-
-            this.setState({
-                [name]: value
-            })
-        }
-
-
-    render() {
-        return (<div className={
-            'card textcenter mt-3 ' + 
-            (this.props.formDisplay ? '' : 'add-appointment')
-        }>
-        <div className="apt-addheading card-header bg-primary text-white"
-        onClick={this.props.toggleForm}>
-          <FaPlus />Add Appointment
+      >
+        <div
+          className="apt-addheading card-header bg-primary text-white"
+          onClick={this.props.toggleForm}
+        >
+          <FaPlus /> Add Appointment
         </div>
 
         <div className="card-body">
-          <form id="aptForm" noValidate
-          onSubmit={this.handleAdd}>
+          <form id="aptForm" noValidate onSubmit={this.handleAdd}>
             <div className="form-group form-row">
               <label
                 className="col-md-2 col-form-label text-md-right"
@@ -162,8 +167,9 @@ class AddAppointments extends Component {
             </div>
           </form>
         </div>
-      </div>);
-    }
+      </div>
+    );
+  }
 }
 
-export default AddAppointments
+export default AddAppointments;
